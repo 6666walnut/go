@@ -3,7 +3,7 @@
 * @Date: 2019/10/29 8:44
  */
 
-package logger
+package mylogger
 
 import (
 	"fmt"
@@ -29,20 +29,29 @@ func NewLog(levelStr string) Logger {
 // 判断日志等级
 
 func (l Logger) enable(level LogLevel) bool {
-	return l.Level >= level
+	return l.Level <= level
 }
 
 // 写日志
 func log(lv LogLevel, msg string) {
 	now := time.Now()
 	funcName, fileName, lineNu := getInfo(2)
-	fmt.Printf("[%s] [DEBUG] [%s %s %d]%s\n", now.Format("2016-01-02 15:04:05"), funcName, fileName, lineNu, msg)
+	levelStr := getLogString(lv)
+	fmt.Printf("[%s] [%s] [%s %s %d]%s\n", now.Format("2006-01-02 15:04:05"), levelStr, funcName, fileName, lineNu, msg)
 }
 
-func getLogString(lv LogLevel)string  {
+func getLogString(lv LogLevel) string {
 	switch lv {
 	case DEBUG:
 		return "debug"
+	case INFO:
+		return "info"
+	case WARN:
+		return "warn"
+	case ERROR:
+		return "error"
+	default:
+		return "不存在"
 	}
 }
 

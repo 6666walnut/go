@@ -3,7 +3,7 @@
 * @Date: 2019/10/29 9:04
  */
 
-package logger
+package mylogger
 
 import (
 	"errors"
