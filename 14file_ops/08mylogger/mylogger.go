@@ -3,7 +3,7 @@
 * @Date: 2019/10/29 9:04
  */
 
-package mylogger
+package _8mylogger
 
 import (
 	"errors"
@@ -38,7 +38,7 @@ func parseLogLevel(s string) (LogLevel, error) {
 }
 
 func getInfo(n int) (funcName, fileName string, lineNu int) {
-	pc, file, lineNu, ok := runtime.Caller(1)
+	pc, file, lineNu, ok := runtime.Caller(n)
 	if !ok {
 		fmt.Printf("不OK\n")
 		return
@@ -46,4 +46,21 @@ func getInfo(n int) (funcName, fileName string, lineNu int) {
 	funcName = runtime.FuncForPC(pc).Name()
 	fileName = path.Base(file)
 	return
+}
+
+
+// 根据等级获取日志的等级字符串
+func getLogString(lv LogLevel) string {
+	switch lv {
+	case DEBUG:
+		return "debug"
+	case INFO:
+		return "info"
+	case WARN:
+		return "warn"
+	case ERROR:
+		return "error"
+	default:
+		return "不存在"
+	}
 }
