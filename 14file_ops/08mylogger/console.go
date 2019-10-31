@@ -12,6 +12,7 @@ import (
 
 type LogLevel uint16
 
+// 日志等级
 type ConsoleLogger struct {
 	Level LogLevel
 }

@@ -77,33 +77,33 @@ func (f *FileLogger) enable(level LogLevel) bool {
 }
 
 // 文件超过大小进行重命名
-func (f *FileLogger) checkSize(file *os.File) (*os.File,error) {
+func (f *FileLogger) checkSize(file *os.File) (*os.File, error) {
 	fileInfo, err := file.Stat()
 	if err != nil {
-		return file,err
+		return file, err
 	}
 	if fileInfo.Size() > f.maxFileSize {
 		// 切割文件大小
-		// 1.关闭当前文件
-		file.Close()
-		// 2.备份rename
 		logName := path.Join(f.filePath, fileInfo.Name())
 		nowStr := time.Now().Format("20060102150405000")
 		newLogName := fmt.Sprintf("%s.bak%s", logName, nowStr)
+		// 1.关闭当前文件
+		file.Close()
+		// 2.备份rename
 		err = os.Rename(logName, newLogName)
 		if err != nil {
 			panic("rename is err")
-			return file,err
+			//return file, err
 		}
 		// 3. 打开新的
-		fileObj, err := oos.OpenFile(logName+".err", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		fileObj, err := os.OpenFile(logName+".err", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			panic("open file is failed")
-			return file,err
+			//return file, err
 		}
-		return fileObj,nil
+		return fileObj, nil
 	}
-	return file,err
+	return file, err
 }
 
 // 写日志
@@ -112,7 +112,7 @@ func (f *FileLogger) log(lv LogLevel, format string, a ...interface{}) {
 		msg := fmt.Sprintf(format, a...)
 		now := time.Now()
 		funcName, fileName, lineNu := getInfo(3)
-
+		//f.fileObj, _ = f.checkSize(f.fileObj)
 		_, err := fmt.Fprintf(f.fileObj, "%s|[%s] %s |%s| %d| %s\n", now.Format("2006-01-02 15:04:05"), getLogString(lv), funcName, fileName, lineNu, msg)
 		if err != nil {
 			panic("this is err for write to ")

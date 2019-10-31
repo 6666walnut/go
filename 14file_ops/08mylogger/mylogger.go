@@ -21,6 +21,7 @@ const (
 	ERROR
 )
 
+// 根据字符串返回日志等级
 func parseLogLevel(s string) (LogLevel, error) {
 	s = strings.ToLower(s)
 	switch s {
