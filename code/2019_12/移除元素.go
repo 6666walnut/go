@@ -17,17 +17,15 @@ func removeElement(nums []int, val int) int {
 		if k != val {
 			nums[i] = k
 			i++
-			j++
-		} else {
-			j++
 		}
+		j++
 	}
 	res := len(nums) - (j - i)
 	return res
 }
 
 func main() {
-	nums := []int{1, 2, 3, 2, 4, 2}
+	nums := []int{0, 1, 2, 2, 3, 0, 4, 2}
 	val := 2
 	removeElement(nums, val)
 }
