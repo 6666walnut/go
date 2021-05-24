@@ -43,7 +43,7 @@ func deleteDuplicates(head *ListNode) *ListNode {
 }
 
 func main() {
-	var listNode ListNode = ListNode{
+	var listNode = ListNode{
 		Val:  1,
 		Next: nil,
 	}
